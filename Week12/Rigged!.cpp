@@ -12,12 +12,19 @@ bool canPolycarpWin(int w, int polycarp_strength, int polycarp_endurance, vector
 }
 
 int findWinningWeight(int polycarp_strength, int polycarp_endurance, vector<pair<int, int>>& athletes) {
-    for (int w = 1; w <= polycarp_strength; w++) {
-        if (canPolycarpWin(w, polycarp_strength, polycarp_endurance, athletes)) {
-            return w;
+    int low = 1, high = polycarp_strength;
+    int result = -1;
+    while (low <= high) {
+        int mid = low + (high - low) / 2;
+        if (canPolycarpWin(mid, polycarp_strength, polycarp_endurance, athletes)) {
+            result = mid;
+            high = mid - 1;
+        } 
+        else {
+            low = mid + 1;
         }
     }
-    return -1;
+    return result;
 }
 
 int main() {
@@ -29,17 +36,17 @@ int main() {
         int polycarp_strength, polycarp_endurance;
         vector<pair<int, int>> athletes;
         
-        for (int i = 0; i < n; ++i) {
+        for (int i = 0; i < n; i++) {
             int si, ei;
             cin >> si >> ei;
             if (i == 0) {
                 polycarp_strength = si;
                 polycarp_endurance = ei;
-            } else {
+            } 
+            else {
                 athletes.push_back({si, ei});
             }
         }
-        
         cout << findWinningWeight(polycarp_strength, polycarp_endurance, athletes) << endl;
     }
 }
