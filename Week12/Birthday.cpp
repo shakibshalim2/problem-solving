@@ -3,25 +3,25 @@ using namespace std;
 int main() {
     int n;
     cin >> n;
-    vector<int> heights(n);
-    
+    vector<int> a(n);
+
     for (int i = 0; i < n; i++) {
-        cin >> heights[i];
+        cin >> a[i];
     }
-    
-    sort(heights.begin(), heights.end());
-    
-    vector<int> result(n);
+    sort(a.begin(), a.end());
+
+    vector<int> result;
     int left = 0, right = n - 1;
-    int index = 0;
-    
     while (left <= right) {
-        if (index % 2 == 0) {
-            result[index++] = heights[left++];
-        }
+        if (left == right) {
+            result.push_back(a[left]);
+        } 
         else {
-            result[index++] = heights[right--];
+            result.push_back(a[left]);
+            result.push_back(a[right]);
         }
+        left++;
+        right--;
     }
     for (int i = 0; i < n; i++) {
         cout << result[i] << " ";
